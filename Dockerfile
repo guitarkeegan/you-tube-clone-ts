@@ -1,7 +1,6 @@
-FROM node:18 AS build
+FROM node:18-slim AS build
 
 WORKDIR /app
-
 
 COPY package*.json ./
 
@@ -9,17 +8,17 @@ RUN npm install
 
 COPY . .
 
-RUN npm build
+RUN npm run build
 
 
 # production stage
-FROM node:18
+FROM node:18-slim
 
 RUN apt-get update && apt-get install -y ffmpeg
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package*.json docOrdIntro.mkv ./
 
 RUN npm install --only=production       
 
